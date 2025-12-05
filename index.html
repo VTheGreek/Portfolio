@@ -1,0 +1,392 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grid + Flexbox example</title>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font: 16px/1.6 system-ui, sans-serif;
+    background:#e5e7eb;
+  }
+
+  /* === GRID LAYOUT =================================================== */
+
+  .app{
+    min-height:100vh;
+    display:grid;
+    gap:12px;
+    padding:12px;
+    grid-template-areas:
+      "header header"
+      "sidebar main"
+      "extra  extra"
+      "footer footer";
+    grid-template-columns: 260px 1fr;
+    grid-template-rows: auto 1fr 1fr auto;
+    background:#f8fafc;
+  }
+
+  header{
+    grid-area:header;
+    background:#0a84ff;
+    color:#fff;
+    padding:12px 16px;
+    border-radius:.5rem;
+
+    /* FLEX: header inner layout */
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+  }
+
+  /* left side of header (logo + title) */
+  .brand {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-weight:600;
+  }
+  .brand-logo {
+    width:26px;
+    height:26px;
+    border-radius:999px;
+    background:#fff;
+    opacity:.9;
+  }
+
+  /* right side of header (nav) */
+  .nav {
+    display:flex;
+    gap:12px;
+    font-size:14px;
+  }
+  .nav a{
+    text-decoration:none;
+    color:#e0f2ff;
+    padding:4px 8px;
+    border-radius:999px;
+  }
+  .nav a.active,
+  .nav a:hover{
+    background:rgba(255,255,255,.2);
+  }
+
+  /* SIDEBAR ----------------------------------------------------------- */
+
+  .main-sidebar{
+    grid-area:sidebar;
+    background:#020617;
+    color:#cbd5e1;
+    padding:12px;
+    border-radius:.5rem;
+
+    /* FLEX column */
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+
+  .sidebar-section-title{
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:#64748b;
+  }
+
+  .sidebar-menu{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    list-style:none;
+    padding:0;
+    margin:0;
+  }
+  .sidebar-menu li{
+    padding:6px 8px;
+    border-radius:.4rem;
+    cursor:pointer;
+  }
+  .sidebar-menu li:hover,
+  .sidebar-menu li.active{
+    background:#0f172a;
+  }
+
+  /* MAIN CONTENT ------------------------------------------------------ */
+
+  main{
+    grid-area:main;
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:.5rem;
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+
+  .main-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+  }
+
+  .filters{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .chip{
+    font-size:13px;
+    padding:4px 10px;
+    border-radius:999px;
+    border:1px solid #e5e7eb;
+    cursor:pointer;
+  }
+  .chip.active{
+    background:#0a84ff;
+    color:#fff;
+    border-color:#0a84ff;
+  }
+
+  /* articles layout using flexbox */
+  .articles{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .article-card{
+    flex:1 1 260px; /* grow, shrink, base width */
+    background:#f9fafb;
+    border-radius:.5rem;
+    border:1px solid #e5e7eb;
+    padding:12px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .article-meta{
+    font-size:13px;
+    color:#6b7280;
+  }
+
+  /* EXTRA ROW -------------------------------------------------------- */
+
+  .extra-row{
+    grid-area:extra;
+    display:grid;
+    grid-template-columns: 1fr 1fr; /* 50% / 50% */
+    gap:12px;
+  }
+
+  .sidebar-extra{
+    background:#020617;
+    color:#e5e7eb;
+    padding:12px;
+    border-radius:.5rem;
+
+    /* FLEX column */
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .tag-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  .tag{
+    font-size:12px;
+    padding:2px 8px;
+    border-radius:999px;
+    background:#0f172a;
+  }
+
+  .main-extra{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:.5rem;
+    padding:12px;
+
+    /* FLEX row inside the card */
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+
+  .stats-row{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .stat{
+    flex:1 1 120px;
+    padding:8px;
+    border-radius:.5rem;
+    background:#f9fafb;
+    text-align:center;
+    font-size:14px;
+  }
+  .stat span{
+    display:block;
+    font-size:11px;
+    color:#6b7280;
+  }
+
+  /* FOOTER ----------------------------------------------------------- */
+
+  footer{
+    grid-area:footer;
+    background:#111827;
+    color:#fff;
+    padding:12px;
+    border-radius:.5rem;
+    text-align:center;
+    font-size:14px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+
+  /* RESPONSIVE ------------------------------------------------------- */
+
+  @media (max-width:900px){
+    .app{
+      grid-template-areas:
+        "header"
+        "sidebar"
+        "main"
+        "extra"
+        "footer";
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto auto auto;
+    }
+
+    .extra-row{
+      grid-template-columns: 1fr;  /* stack extra columns on small screens */
+    }
+
+  }
+
+</style>
+
+<div class="app">
+  <header>
+    <div class="brand">
+      <div class="brand-logo"></div>
+      <span>My Dashboard</span>
+    </div>
+    <nav class="nav">
+      <a href="#" class="active">Overview</a>
+      <a href="#">Reports</a>
+      <a href="#">Settings</a>
+    </nav>
+  </header>
+
+  <aside class="main-sidebar">
+    <div>
+      <div class="sidebar-section-title">Navigation</div>
+      <ul class="sidebar-menu">
+        <li class="active">Home</li>
+        <li>Projects</li>
+        <li>Team</li>
+        <li>Billing</li>
+      </ul>
+    </div>
+    <div>
+      <div class="sidebar-section-title">Shortcuts</div>
+      <ul class="sidebar-menu">
+        <li>Create report</li>
+        <li>New task</li>
+      </ul>
+    </div>
+  </aside>
+
+  <main>
+    <div class="main-header">
+      <h2>Main content</h2>
+      <div class="filters">
+        <div class="chip active">This week</div>
+        <div class="chip">This month</div>
+        <div class="chip">Custom range</div>
+      </div>
+    </div>
+
+<!--    <div class="main-header">-->
+<!--  <h2>Main content</h2>-->
+
+<!--  <div class="filters-block">-->
+<!--    <h3 class="filters-title">Filters</h3>-->
+<!--    <div class="filters">-->
+<!--      <div class="chip active">This week</div>-->
+<!--      <div class="chip">This month</div>-->
+<!--      <div class="chip">Custom range</div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+    <div class="articles">
+      <article class="article-card">
+        <h3>Article one</h3>
+        <p>Quick summary of something important that belongs in the main area.</p>
+        <div class="article-meta">Updated 2 hours ago</div>
+      </article>
+      <article class="article-card">
+        <h3>Article two</h3>
+        <p>Another piece of content. Flexbox lets these cards wrap nicely.</p>
+        <div class="article-meta">Updated yesterday</div>
+      </article>
+      <article class="article-card">
+        <h3>Article three</h3>
+        <p>Cards grow or shrink depending on viewport width.</p>
+        <div class="article-meta">Updated 5 days ago</div>
+      </article>
+    </div>
+  </main>
+
+  <section class="extra-row">
+    <aside class="sidebar-extra">
+      <h3>Tags</h3>
+      <p>Frequently used labels:</p>
+      <div class="tag-row">
+        <span class="tag">frontend</span>
+        <span class="tag">backend</span>
+        <span class="tag">design</span>
+        <span class="tag">devops</span>
+        <span class="tag">urgent</span>
+      </div>
+    </aside>
+
+    <section class="main-extra">
+      <h3>Quick stats</h3>
+      <div class="stats-row">
+        <div class="stat">
+          24
+          <span>Open tasks</span>
+        </div>
+        <div class="stat">
+          5
+          <span>Active projects</span>
+        </div>
+        <div class="stat">
+          3
+          <span>Pending reviews</span>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <footer>Footer · Grid + Flexbox layout demo</footer>
+</div>
+
+
+</body>
+</html>
